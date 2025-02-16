@@ -1,9 +1,14 @@
 {
-  "name": "my-app",
+  "name": "city-sync",
   "version": "0.1.0",
+  "homepage": "https://city-sync-d9c13.web.app/",
   "private": true,
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
+    "firebase": "^11.3.1",
+    "jquery": "^3.7.1",
+    "popper.js": "^1.16.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
