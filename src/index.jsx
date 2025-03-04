@@ -1,6 +1,11 @@
 import { createRoot } from "react-dom/client"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Announcement from "./announcement";
+import Report from "./report";
+import Feedback from "./feedback";
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 const root = createRoot(document.getElementById("root"))
+
 
 function Navbar() {
     return (
@@ -29,6 +34,15 @@ function Navbar() {
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><a className="dropdown-item" href="#">Something else here</a></li>
                             </ul>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/announcement">Announcement</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/report">Report</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/feedback">Feedback</Link>
                         </li>
                     </ul>
                     <form role="search">
@@ -69,11 +83,33 @@ function SignIn() {
     )
 }
 
+const announcementsData = [
+    {
+        title: "Concert",
+        description: "Concert on March 2nd",
+        image: "/calendar.png"
+    },
+    {
+        title: "Soccer Game",
+        description: "Soccer Game on March 2nd.",
+        image: "/calendar.png"
+    }
+  ]
+
 root.render(
-    <div>
+    <Router>
         <Navbar />
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <SignIn style={{ maxWidth: '400px', width: '100%' }} />
-        </div>
-    </div>
+        <Routes>
+            <Route path="/" element={
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <SignIn style={{ maxWidth: '400px', width: '100%' }} />
+                    </div>
+                </div>
+            } />
+            <Route path="/announcement" element={<Announcement announcements={announcementsData} />} />
+            <Route path="/report" element={<Report />} />
+            <Route path="/feedback" element={<Feedback />} />
+        </Routes>
+    </Router>
 )
