@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const ViewFeedback = () => {
   const [feedback, setFeedback] = useState([]);
   
+    
     useEffect(() => {
       // Load announcements from localStorage
       const savedFeedback=
@@ -17,7 +18,7 @@ const ViewFeedback = () => {
   
         <div className="row">
           {feedback.length === 0 ? (
-            <p className="text-center">No reports yet.</p>
+            <p className="text-center">No feedback yet.</p>
           ) : (
             feedback.map((feedback, index) => (
               <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-4">

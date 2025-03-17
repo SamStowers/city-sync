@@ -18,6 +18,7 @@ function Report() {
           //image,
           location
         };
+        
     
         // Save to localStorage (mimicking a backend)
         const existingReports =
