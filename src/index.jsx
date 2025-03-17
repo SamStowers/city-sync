@@ -6,6 +6,9 @@ import Feedback from "./feedback";
 import SignIn from "./signIn.jsx";
 import CreateAccount from "./createAcc.jsx";
 import Navbar from "./navbar.jsx"
+import ViewReport from "./viewReports.jsx"
+import CreateAnnounce from "./createAnnouncement.jsx"
+import ViewFeedback from "./viewFeedback.jsx"
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { initializeApp } from 'firebase/app';
 const root = createRoot(document.getElementById("root"))
@@ -53,9 +56,16 @@ root.render(
                 <CreateAccount />
             </div>
             } />
-            <Route path="/announcement" element={<Announcement announcements={announcementsData} />} />
+            <Route path="/announcement" element={<Announcement  />} />
             <Route path="/report" element={<Report />} />
             <Route path="/feedback" element={<Feedback />} />
+            <Route path="/admin" element={
+            <div>
+                <CreateAnnounce />
+                <ViewReport />
+                <ViewFeedback />
+            </div>
+            }  />
         </Routes>
     </Router>
 )

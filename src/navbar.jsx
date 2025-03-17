@@ -65,6 +65,9 @@ function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/feedback">Feedback</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/admin">Admin</Link>
+                        </li>
                     </ul>
                     {/* <form role="search">
                         <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
