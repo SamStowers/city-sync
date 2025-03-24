@@ -1,36 +1,37 @@
 import React, { useState } from "react";
+import db from "./index";
+import { collection, addDoc } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const CreateAnnounce = () => {
+
+function CreateAnnounce(){
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Create new announcement object
-    const newAnnouncement = {
-      title,
-      description,
-      image,
-      date: new Date().toISOString(),
-    };
+    try {
+      // Create a new announcement document in Firestore
+       await addDoc(collection(db, "announcements"), {
+        title: title,
+        description: description,
+        image: image,
+        // date: new Date().toISOString(),
+      });
+      alert("Announcement created successfully!");
+      // Clear form fields
+      setTitle("");
+      setDescription("");
+      setImage("");
 
-    // Save to localStorage (mimicking a backend)
-    const existingAnnouncements =
-      JSON.parse(localStorage.getItem("announcements")) || [];
-    localStorage.setItem(
-      "announcements",
-      JSON.stringify([newAnnouncement, ...existingAnnouncements])
-    );
-
-    // Clear form fields
-    setTitle("");
-    setDescription("");
-    setImage("");
-
-    alert("Announcement created successfully!");
+      
+    } catch (error) {
+      console.error("Error creating announcement:", error);
+      alert("Failed to create announcement. Please try again.");
+    }
   };
 
   return (

@@ -11,6 +11,8 @@ import CreateAnnounce from "./createAnnouncement.jsx"
 import ViewFeedback from "./viewFeedback.jsx"
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { initializeApp } from 'firebase/app';
+import { getFirestore, collection } from "firebase/firestore";
+
 const root = createRoot(document.getElementById("root"))
 
 // Firebase configuration settings
@@ -29,19 +31,9 @@ const firebaseConfig = {
 // you must use a Firebase emulator, more info here:
 // https://firebase.google.com/docs/emulator-suite
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const announcementsData = [
-    {
-        title: "Concert",
-        description: "Concert on March 2nd",
-        image: "/calendar.png"
-    },
-    {
-        title: "Soccer Game",
-        description: "Soccer Game on March 2nd.",
-        image: "/calendar.png"
-    }
-  ]
+
 
 root.render(
     <Router>
@@ -68,4 +60,5 @@ root.render(
             }  />
         </Routes>
     </Router>
-)
+);
+export default db;
