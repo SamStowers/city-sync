@@ -1,38 +1,53 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { collection, addDoc } from "firebase/firestore";
+import db from "./index";
 
 function Feedback() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     // const [image, setImage] = useState("");
-    const [location, setLocation] = useState("");
+    // const [location, setLocation] = useState("");
     
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
     
         // Create new announcement object
-        const newFeedback = {
-          title,
-          description,
-          //image,
-          location
-        };
+        // const newFeedback = {
+        //   title,
+        //   description,
+        //   //image,
+        //   location
+        // };
     
-        // Save to localStorage (mimicking a backend)
-        const existingFeedback =
-        JSON.parse(localStorage.getItem("feedback")) || [];
-        localStorage.setItem("feedback",
-        JSON.stringify([newFeedback, ...existingFeedback])
-        );
+        // // Save to localStorage (mimicking a backend)
+        // const existingFeedback =
+        // JSON.parse(localStorage.getItem("feedback")) || [];
+        // localStorage.setItem("feedback",
+        // JSON.stringify([newFeedback, ...existingFeedback])
+        // );
+
+        try {
+            const docRef = await addDoc(collection(db, "userFeedback"), {
+              title: title,
+              description: description,
+            //   location: location,
+              timestamp: new Date(), // Add a timestamp for when the report was submitted
+            });
+            console.log("Document written with ID: ", docRef.id);
+            alert("Report created successfully!");
+  
+            setTitle("");
+            setDescription("");
+            // setLocation("");
+  
+            return docRef.id; // Return the document ID if needed
+          } catch (err) {
+            console.error("Error adding document: ", e);
+            throw err; // Rethrow the error for handling in the calling context
+          }
     
-        // Clear form fields
-        setTitle("");
-        setDescription("");
-        // setImage("");
-        setLocation("")
-    
-        alert("Feedback submitted successfully!");
       };
     
 
