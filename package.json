@@ -4,6 +4,8 @@
   "homepage": "https://city-sync-d9c13.web.app/",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^2.20.6",
+    "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
     "firebase": "^11.4.0",

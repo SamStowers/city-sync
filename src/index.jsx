@@ -12,6 +12,8 @@ import ViewFeedback from "./viewFeedback.jsx"
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection } from "firebase/firestore";
+import MapComponent from "./mapComponent";
+import Events from "./events";
 
 const root = createRoot(document.getElementById("root"))
 
@@ -49,6 +51,8 @@ root.render(
             </div>
             } />
             <Route path="/announcement" element={<Announcement  />} />
+            <Route path="/map" element={<MapComponent/>} />
+            <Route path="/events" element={<Events />} />
             <Route path="/report" element={<Report />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/admin" element={
