@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { collection, addDoc } from "firebase/firestore";
 import db from "./index";
+import { getUserReportPermission } from "./userFunctions";
+import { getUserUID, getUserEmail } from "./userFunctions";
 
 function Report() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     // const [image, setImage] = useState("");
     const [location, setLocation] = useState("");
-    
 
     // const handleSubmit = (e) => {
     //     e.preventDefault();
@@ -41,13 +42,18 @@ function Report() {
     // Upload to Firebase
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        var curReportPerm = await getUserReportPermission();
+        if (!curReportPerm) {
+            alert("You must be logged in to submit a report, or you do not have permission.")
+        } else {
         try {
           const docRef = await addDoc(collection(db, "reports"), {
             title: title,
             description: description,
             location: location,
             timestamp: new Date(), // Add a timestamp for when the report was submitted
+            submitteruid: getUserUID(),
+            submitteremail: getUserEmail()
           });
           console.log("Document written with ID: ", docRef.id);
           alert("Report created successfully!");
@@ -60,6 +66,7 @@ function Report() {
         } catch (err) {
           console.error("Error adding document: ", e);
           throw err; // Rethrow the error for handling in the calling context
+        }
         }
       };
 
@@ -100,7 +107,6 @@ function Report() {
                         onChange={(e) => setLocation(e.target.value)}
                     />
                 </div>
-            
                 <button type="submit" className="btn btn-primary">Submit Report</button>
             </form>
         </div>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { collection, addDoc } from "firebase/firestore";
+import { getUserFeedbackPermission } from "./userFunctions";
+import { getUserUID, getUserEmail } from "./userFunctions";
 import db from "./index";
 
 function Feedback() {
@@ -27,13 +29,18 @@ function Feedback() {
         // localStorage.setItem("feedback",
         // JSON.stringify([newFeedback, ...existingFeedback])
         // );
-
+        var curFeedbackPerm = await getUserFeedbackPermission();
+        if (!curFeedbackPerm) {
+            alert("You must be logged in to submit feedback, or you do not have permission.")
+        } else {
         try {
             const docRef = await addDoc(collection(db, "userFeedback"), {
               title: title,
               description: description,
             //   location: location,
               timestamp: new Date(), // Add a timestamp for when the report was submitted
+              submitteruid: getUserUID(),
+              submitteremail: getUserEmail() 
             });
             console.log("Document written with ID: ", docRef.id);
             alert("Report created successfully!");
@@ -47,6 +54,7 @@ function Feedback() {
             console.error("Error adding document: ", e);
             throw err; // Rethrow the error for handling in the calling context
           }
+        }
     
       };
     

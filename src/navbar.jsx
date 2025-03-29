@@ -1,29 +1,45 @@
 import React, { useState } from 'react';
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { getUserAdmin } from './userFunctions';
 
+var curAdmin = false;
+// var curAdmin2 = false;
 
-    
+async function updateAdminStatus() {
+    curAdmin = await getUserAdmin();
+}
 
 function Navbar() {
     // See if a user is signed in
     const auth = getAuth();
     const [curUser, setCurUser] = useState('Guest');
+    const [isAdmin, setIsAdmin] = useState(false);
+    const navigate = useNavigate();
+
     onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
+
+        // !!!!!!!!!!!!! Some async bug here
         setCurUser(user.email);
+        updateAdminStatus();
+        setIsAdmin(curAdmin);
     } else {
         // User is signed out
         setCurUser('Guest');
+        setIsAdmin(false);
     }
     });
 
     const handleClick = () => {
         const auth = getAuth();
+
         signOut(auth).then(() => {
         // Sign-out successful.
+        navigate('/');
         }).catch((error) => {
         // An error happened.
         });
@@ -71,14 +87,19 @@ function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/feedback">Feedback</Link>
                         </li>
+                        {isAdmin && (
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin">Admin</Link>
                         </li>
+                        )}
                     </ul>
                     {/* <form role="search">
                         <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
                     </form> */}
-                    <p style={{ color: 'red' }}>Current User: {curUser}</p>
+                    {isAdmin && (
+                        <p style={{ color: 'red' }}>ADMINISTRATOR </p>
+                    )}
+                    <p style={{ color: 'white' }}>Current User: {curUser} </p>
                     <button onClick={handleClick}>Sign Out</button>
                 </div>
             </div>

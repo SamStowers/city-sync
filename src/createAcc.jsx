@@ -1,5 +1,20 @@
 import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import db from "./index";
+
+// Async function to create all the new data corresponding to the new account
+// Stored in Firestore
+// setDoc will create a new document if it does not exist already
+async function createUser(newUid, newEmail) {
+  await setDoc(doc(db, "users", newUid), {
+    uid: newUid,
+    email: newEmail,
+    admin: false,
+    feedbackPermission: true,
+    reportPermission: true,
+  });
+}
 
 function CreateAccount() {
     const [email, setEmail] = useState('');
@@ -33,6 +48,9 @@ function CreateAccount() {
           .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
+            // Add user data to Firestore
+            createUser(user.uid, user.email);
+            // Update success, showing a success message to the user
             setSuccess(true);
           })
           .catch((error) => {
