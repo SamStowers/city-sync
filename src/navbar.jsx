@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import React, { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { getUserAdmin } from './userFunctions';
@@ -18,14 +18,19 @@ function Navbar() {
     const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
+    // Runs on initial load, to see if the user is an admin
+    useEffect(() => {
+        updateAdminStatus();
+        setIsAdmin(curAdmin);
+    }, [])
+
     onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
-
-        // !!!!!!!!!!!!! Some async bug here
         setCurUser(user.email);
         updateAdminStatus();
+        setIsAdmin(false);
         setIsAdmin(curAdmin);
     } else {
         // User is signed out

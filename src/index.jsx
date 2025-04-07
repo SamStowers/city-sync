@@ -14,6 +14,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection } from "firebase/firestore";
 import MapComponent from "./mapComponent";
 import Events from "./events";
+import AddAdmin from "./addAdmin.jsx";
 
 const root = createRoot(document.getElementById("root"))
 
@@ -60,6 +61,7 @@ root.render(
                 <CreateAnnounce />
                 <ViewReport />
                 <ViewFeedback />
+                <AddAdmin />
             </div>
             }  />
         </Routes>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function SignIn() {
@@ -6,6 +6,15 @@ function SignIn() {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [success, setSuccess] = useState(false);
+    const [curUID, setCurUID] = useState('');
+
+    // Runs on initial load, to get the UID if the user is already logged in
+    useEffect(() => {
+        const auth = getAuth();
+        if (auth.currentUser) {
+            setCurUID(auth.currentUser.uid);
+        }
+    }, [])
 
     const handleSubmit = (event) => {
             event.preventDefault(); // Prevent default form submission
@@ -18,6 +27,7 @@ function SignIn() {
                 const user = userCredential.user;
                 setSuccess(true);
                 setErrorMessage('');
+                setCurUID(user.uid);
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -34,6 +44,9 @@ function SignIn() {
 
     return(
         <main className="form-signin w-100 m-auto">
+            {curUID && (
+                <p class="text-left">UID: {curUID}</p>
+            )}            
             <form onSubmit={handleSubmit}>
                 {/* <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> */}
                 <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
