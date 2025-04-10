@@ -53,7 +53,7 @@ root.render(
             } />
             <Route path="/announcement" element={<Announcement  />} />
             <Route path="/map" element={<MapComponent/>} />
-            <Route path="/events" element={<Events />} />
+            {/* <Route path="/events" element={<Events />} /> */}
             <Route path="/report" element={<Report />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/admin" element={

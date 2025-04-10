@@ -68,20 +68,58 @@ export async function setUserFeedbackPermission(permValue) {
 }
 
 export async function getUserAdmin() {
-    const auth = getAuth();
-    var uid = "";
-    if (auth.currentUser) {
-        uid = auth.currentUser.uid;
-    } else {
-        uid = "guest";
-    }
-    const docSnap = await getDoc(doc(db, "users", uid));
-    if (docSnap.exists()) {
-        return docSnap.data().admin;
-    } else {
-        // If there was an error of any type, assume no admin permissions
-        return false;
-    }
+    // const auth = getAuth();
+    // var uid = "";
+    // if (auth.currentUser) {
+    //     uid = auth.currentUser.uid;
+    // } else {
+    //     uid = "guest";
+    // }
+
+    // const docRef = doc(db, "users", uid);
+    // const docSnap = await getDoc(docRef);
+
+    // if (docSnap.exists()) {
+    //     console.log("YAY")
+    //     return(docSnap.data().admin);
+    // } else {
+    //     console.log("No such document!");
+    //     return false;
+    // }
+    return new Promise(async (resolve, reject) => {
+        const auth = getAuth();
+        let uid = "";
+        if (auth.currentUser) {
+            uid = auth.currentUser.uid;
+        } else {
+            uid = "guest";
+            console.log("HUH????")
+        }
+
+        const docRef = doc(db, "users", uid);
+        try {
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                console.log("W:")
+                console.log(docSnap.data());
+                console.log(docSnap.data().admin);
+                if (docSnap.data().admin) {
+                    resolve(true);
+                } else {
+                    console.log("BOO");
+                    reject(false);
+                }
+
+            } else {
+                console.log("No such document!");
+                reject(false);
+            }
+        } catch (error) {
+            console.error("Error fetching document:", error);
+            reject(false);
+        }
+    });
 }
 
 export async function getUserReportPermission() {

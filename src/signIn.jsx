@@ -45,7 +45,7 @@ function SignIn() {
     return(
         <main className="form-signin w-100 m-auto">
             {curUID && (
-                <p class="text-left">UID: {curUID}</p>
+                <p className="text-left">UID: {curUID}</p>
             )}            
             <form onSubmit={handleSubmit}>
                 {/* <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> */}
