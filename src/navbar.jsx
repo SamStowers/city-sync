@@ -76,9 +76,6 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarsExample03">
                     <ul className="navbar-nav me-auto mb-2 mb-sm-0">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-                        </li>
-                        <li className="nav-item">
                             <Link className="nav-link" to="/signinPage">Sign In</Link>
                         </li>
                         {/* <li className="nav-item">
@@ -94,6 +91,9 @@ function Navbar() {
                         </li> */}
                         <li className="nav-item">
                             <Link className="nav-link" to="/announcement">Announcement</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/about">About</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/map">Map</Link>

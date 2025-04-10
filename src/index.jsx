@@ -13,8 +13,10 @@ import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection } from "firebase/firestore";
 import MapComponent from "./mapComponent";
-import Events from "./events";
+import EventsScreen from "./events";
 import AddAdmin from "./addAdmin.jsx";
+import AboutPage from "./about";
+import Homepage from "./homepage";
 
 const root = createRoot(document.getElementById("root"))
 
@@ -42,9 +44,7 @@ root.render(
     <Router>
         <Navbar />
         <Routes>
-            <Route path="/" element={
-                <p>Homepage :)</p>
-            } />
+            <Route path="/" element={<Homepage  />}/>
             <Route path="/signinPage" element={
             <div>
                 <SignIn />
@@ -52,8 +52,10 @@ root.render(
             </div>
             } />
             <Route path="/announcement" element={<Announcement  />} />
+            <Route path="/about" element={<AboutPage/>} />
             <Route path="/map" element={<MapComponent/>} />
             {/* <Route path="/events" element={<Events />} /> */}
+            <Route path="/events" element={<EventsScreen />} />
             <Route path="/report" element={<Report />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/admin" element={
