@@ -67,6 +67,25 @@ export async function setUserFeedbackPermission(permValue) {
       });
 }
 
+export async function getUserAdminFromUID(UIDValue) {
+    if (UIDValue === '0') { return false; }
+    
+    const docRef = doc(db, "users", UIDValue);
+    try {
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            return docSnap.data().admin;
+        } else {
+            console.log("No such document!");
+            return false;
+        }
+    } catch (error) {
+        console.error("Error fetching document:", error);
+        return false;
+    }
+}
+
 export async function getUserAdmin() {
     // const auth = getAuth();
     // var uid = "";

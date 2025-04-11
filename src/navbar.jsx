@@ -2,35 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { getUserAdmin } from './userFunctions';
+import { getUserAdminFromUID } from './userFunctions';
 
 function Navbar() {
     // See if a user is signed in
     const auth = getAuth();
     const [curUser, setCurUser] = useState('Guest');
+    const [curUID, setCurUID] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const [reloadUser, setReloadUser] = useState(false);
     const navigate = useNavigate();
 
     // Runs on initial load, to see if the user is an admin
     useEffect(() => {
-
         async function updateAdminStatus() {
             try {
-                const adminStatus = await getUserAdmin();
+                const adminStatus = await getUserAdminFromUID(curUID);
                 setIsAdmin(adminStatus);
-                // console.log("----");
-                // console.log(isAdmin);
             }
             catch (error) { console.log(error) }
             finally {
-                if (auth.currentUser) {
-                    setCurUser(auth.currentUser.email);
-                }
-                else {
-                    setCurUser("Guest");
-                }
-                // console.log(isAdmin);
                 setReloadUser(false);
             }
         }
@@ -38,20 +29,21 @@ function Navbar() {
         updateAdminStatus();
     }, [reloadUser])
 
-    // onAuthStateChanged(auth, (user) => {
-    // if (user) {
-    //     // User is signed in, see docs for a list of available properties
-    //     // https://firebase.google.com/docs/reference/js/auth.user
-    //     setCurUser(user.email);
-    //     updateAdminStatus();
-    //     setIsAdmin(false);
-    //     setIsAdmin(curAdmin);
-    // } else {
-    //     // User is signed out
-    //     setCurUser('Guest');
-    //     setIsAdmin(false);
-    // }
-    // });
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        setCurUser(user.email);
+        // Fetch whether they are admin
+        setCurUID(user.uid);
+        setReloadUser(true);
+    } else {
+        // User is signed out
+        setCurUser('Guest');
+        setCurUID('0');
+        setIsAdmin(false);
+    }
+    });
 
     const handleClick = () => {
         const auth = getAuth();
