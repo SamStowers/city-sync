@@ -68,7 +68,7 @@ function Navbar() {
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">City Sync</a>
+                <Link className="navbar-brand" to="/">City Sync</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
