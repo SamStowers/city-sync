@@ -93,7 +93,7 @@ export async function getUserAdmin() {
             uid = auth.currentUser.uid;
         } else {
             uid = "guest";
-            console.log("HUH????")
+            // console.log("HUH????")
         }
 
         const docRef = doc(db, "users", uid);

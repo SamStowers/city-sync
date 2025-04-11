@@ -19,8 +19,8 @@ function Navbar() {
             try {
                 const adminStatus = await getUserAdmin();
                 setIsAdmin(adminStatus);
-                console.log("----");
-                console.log(isAdmin);
+                // console.log("----");
+                // console.log(isAdmin);
             }
             catch (error) { console.log(error) }
             finally {
@@ -30,7 +30,7 @@ function Navbar() {
                 else {
                     setCurUser("Guest");
                 }
-                console.log(isAdmin);
+                // console.log(isAdmin);
                 setReloadUser(false);
             }
         }
@@ -107,7 +107,7 @@ function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/feedback">Feedback</Link>
                         </li>
-                        {isAdmin && (
+                        {true && (
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin">Admin</Link>
                         </li>
