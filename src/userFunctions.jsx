@@ -3,6 +3,10 @@ import { getAuth } from "firebase/auth";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import db from "./index";
 
+export function unitTestingTest() {
+    return 8;
+}
+
 export function getUserUID() {
     const auth = getAuth();
     if (auth.currentUser) {
